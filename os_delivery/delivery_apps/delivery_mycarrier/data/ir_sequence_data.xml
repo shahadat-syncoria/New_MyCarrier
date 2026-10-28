@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="seq_mycarrier_webhook" model="ir.sequence">
+        <field name="name">MyCarrier Webhook</field>
+        <field name="code">mycarrier.webhook</field>
+        <field name="prefix">MCW/</field>
+        <field name="padding">5</field>
+    </record>
+    <record id="ir_cron_process_mycarrier_webhook" model="ir.cron">
+        <field name="name">Process MyCarrier Webhooks</field>
+        <field name="model_id" ref="model_mycarrier_webhook"/>
+        <field name="state">code</field>
+        <field name="code">model._process_webhooks()</field>
+        <field name="interval_number">15</field>
+        <field name="interval_type">minutes</field>
+    </record>
+</odoo>

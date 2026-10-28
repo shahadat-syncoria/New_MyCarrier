@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo noupdate="1">
+    <record id="pos_moneris_payment_method" model="pos.payment.method">
+        <field name="name">Moneris GO</field>
+        <field name="use_payment_terminal">moneris</field>
+    </record>
+</odoo>

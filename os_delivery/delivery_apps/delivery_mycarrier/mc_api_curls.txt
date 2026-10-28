@@ -1,0 +1,471 @@
+MyCarrier Public API — curl reference
+QA base URL : https://preprod-api.mycarrier.dev
+PROD base URL: https://api.mycarriertms.com
+Auth         : HTTP Basic (username:api_key) + X-Mc-Api-Key header
+
+Replace <USERNAME>, <API_KEY>, <DATE>, <REF> with real values.
+===============================================================================
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1. GET SHIPPING LOCATIONS
+   Code: mycarrier_action_sync_locations()
+   Path: GET /api/v1/address/shipping-locations?skip=0&take=100
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+curl -X GET "https://preprod-api.mycarrier.dev/api/v1/address/shipping-locations?skip=0&take=100" \
+  -u "<USERNAME>:<API_KEY>" \
+  -H "X-Mc-Api-Key: <API_KEY>" \
+  -H "Accept: application/json" \
+  -H "User-Agent: Syncoria-Odoo/1.0"
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+2. CREATE ORDER (picking flow — Button 1)
+   Code: mycarrier_action_create_order()
+   Path: POST /api/v1/orders
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+curl -X POST "https://preprod-api.mycarrier.dev/api/v1/orders" \
+  -u "<USERNAME>:<API_KEY>" \
+  -H "X-Mc-Api-Key: <API_KEY>" \
+  -H "Content-Type: application/json" \
+  -H "Accept: application/json" \
+  -H "User-Agent: Syncoria-Odoo/1.0" \
+  -d '{
+    "orders": [
+      {
+        "quoteReferenceID": "JH/OUT/00029",
+        "serviceType": "LTL",
+        "paymentDirection": "Prepaid",
+        "pickupDate": "09/25/2026",
+        "timeCreated": "09/25/2026 10:07 PM",
+        "readyToDispatch": "NO",
+        "carrier": "",
+        "carrierService": "",
+        "transitDays": "",
+        "accountNumber": "",
+        "cargoValue": "",
+        "specialInstructions": "From Odoo 29",
+        "isVicsBol": "NO",
+        "vicsBolPrefix": "",
+        "proNumber": "",
+        "emergencyContactPersonName": "",
+        "emergencyContactPhone": "",
+        "references": {
+          "poNumber": "PP-001",
+          "referenceNumber": "JH/OUT/00029",
+          "customerBOLNumber": "PPBOL-001"
+        },
+        "originStop": {
+          "locationID": "<LOCATION_ID_FROM_SYNC>",
+          "companyName": "Fishbowl",
+          "streetLine1": "123 Main St",
+          "streetLine2": "",
+          "city": "Salida",
+          "state": "CO",
+          "zip": "81201",
+          "country": "USA",
+          "locationType": "Business",
+          "contactFirstName": "Mitchell",
+          "contactLastName": "Admin",
+          "contactPhone": "555-0100",
+          "ext": "",
+          "contactEmail": "admin@example.com",
+          "readyTime": "8:00 AM",
+          "closeTime": "4:30 PM",
+          "instructions": "From Odoo 29"
+        },
+        "destinationStop": {
+          "companyName": "Lumber Inc",
+          "streetLine1": "456 Oak Ave",
+          "streetLine2": "",
+          "city": "Stockton",
+          "state": "CA",
+          "zip": "95201",
+          "country": "USA",
+          "locationType": "Business",
+          "contactFirstName": "Lumber",
+          "contactLastName": "Inc",
+          "contactPhone": "555-0200",
+          "ext": "",
+          "contactEmail": "",
+          "readyTime": "9:00 AM",
+          "closeTime": "5:00 PM",
+          "instructions": ""
+        },
+        "originAccessorials": {
+          "liftgatePickup": "NO",
+          "insidePickup": "YES",
+          "protectFromFreeze": "YES",
+          "singleShipment": "YES",
+          "inBondFreight": "NO",
+          "thresholdPickup": "NO",
+          "twoPersonPickup": "NO",
+          "whiteGlovePickup": "NO"
+        },
+        "destinationAccessorials": {
+          "liftgateDelivery": "NO",
+          "deliveryAppointment": "NO",
+          "notifyBeforeDelivery": "NO",
+          "insideDelivery": "NO",
+          "sortOrSegregateDelivery": "NO",
+          "thresholdDelivery": "NO",
+          "twoPersonDelivery": "NO",
+          "whiteGloveDelivery": "NO"
+        },
+        "quoteUnits": [
+          {
+            "shippingUnitType": "Pallet",
+            "shippingUnitCount": "1",
+            "unitLength": "48",
+            "unitWidth": "40",
+            "unitHeight": "48",
+            "unitStackable": "NO",
+            "quoteCommodities": [
+              {
+                "commodityDescription": "Product Name",
+                "commodityClass": "70",
+                "commodityWeight": "500",
+                "commodityPieces": "1",
+                "commodityPackingType": "Box",
+                "commodityNMFC": "",
+                "commoditySub": "",
+                "commodityHazMat": "NO",
+                "customerOrderNumber": "JH/OUT/00029"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }'
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+3. RATE AND SAVE (picking flow — Button 2 / Select Rate)
+   Code: mycarrier_action_select_rate()
+   Path: POST /api/v1/quote/rate   action=RATE_AND_SAVE
+   Note: orderId matches the quoteReferenceID sent in Create Order
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+curl -X POST "https://preprod-api.mycarrier.dev/api/v1/quote/rate" \
+  -u "<USERNAME>:<API_KEY>" \
+  -H "X-Mc-Api-Key: <API_KEY>" \
+  -H "Content-Type: application/json" \
+  -H "Accept: application/json" \
+  -H "User-Agent: Syncoria-Odoo/1.0" \
+  -d '{
+    "action": "RATE_AND_SAVE",
+    "paymentTerms": "PREPAID",
+    "carpetRollSquareYards": 0,
+    "identifiers": {
+      "orderId": ["JH/OUT/00029"],
+      "referenceId": "JH/OUT/00029"
+    },
+    "service": {
+      "mode": ["LTL"],
+      "level": ["ALL"],
+      "carriers": null,
+      "equipmentType": null
+    },
+    "accessorials": {
+      "codes": ["LGPU", "SNGSHP", "FRZPROC"]
+    },
+    "stops": [
+      {
+        "stopType": "ORIGIN",
+        "addressId": "<LOCATION_ID_FROM_SYNC>",
+        "appointmentDetails": {
+          "pickup": {
+            "pickupDate": "2026/09/25",
+            "openTime": "08:00",
+            "closeTime": "16:30"
+          }
+        }
+      },
+      {
+        "stopType": "DESTINATION",
+        "name": "Lumber Inc",
+        "addressLine1": "456 Oak Ave",
+        "addressLine2": "",
+        "city": "Stockton",
+        "stateProvince": "CA",
+        "postalCode": "95201",
+        "country": "USA",
+        "contact": {
+          "firstName": "Lumber",
+          "lastName": "Inc",
+          "phone": "555-0200",
+          "email": ""
+        },
+        "appointmentDetails": {
+          "delivery": {
+            "deliveryDate": "2026/09/30",
+            "openTime": "09:00",
+            "closeTime": "17:00"
+          }
+        }
+      }
+    ],
+    "shippingDetails": {
+      "weightUnit": "LB",
+      "dimensionsUnit": "IN",
+      "totalWeight": 500,
+      "totalHandlingUnitCount": 1,
+      "handlingUnits": [
+        {
+          "type": "Pallet",
+          "count": 1,
+          "length": 48,
+          "width": 40,
+          "height": 48,
+          "stackable": false,
+          "commodities": [
+            {
+              "description": "Product Name",
+              "freightClass": "70",
+              "weight": 500,
+              "pieces": 1,
+              "packagingType": "Box",
+              "nmfc": "",
+              "hazmat": false
+            }
+          ]
+        }
+      ]
+    },
+    "fullValueCoverageDetails": {
+      "monetaryValue": "0",
+      "currency": 0
+    }
+  }'
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+4. RATE ONLY (SO flow — sales order rate widget)
+   Code: rate_shipment() / mycarrier_action_get_so_rates()
+   Path: POST /api/v1/quote/rate   action=RATE_ONLY
+   Note: no orderId — just returns quotes, nothing saved in MC
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+curl -X POST "https://preprod-api.mycarrier.dev/api/v1/quote/rate" \
+  -u "<USERNAME>:<API_KEY>" \
+  -H "X-Mc-Api-Key: <API_KEY>" \
+  -H "Content-Type: application/json" \
+  -H "Accept: application/json" \
+  -H "User-Agent: Syncoria-Odoo/1.0" \
+  -d '{
+    "action": "RATE_ONLY",
+    "paymentTerms": "PREPAID",
+    "carpetRollSquareYards": 0,
+    "identifiers": {
+      "orderId": null,
+      "referenceId": "S00037"
+    },
+    "service": {
+      "mode": ["LTL"],
+      "level": ["ALL"],
+      "carriers": null,
+      "equipmentType": null
+    },
+    "accessorials": {
+      "codes": []
+    },
+    "stops": [
+      {
+        "stopType": "ORIGIN",
+        "addressId": "<LOCATION_ID_FROM_SYNC>",
+        "appointmentDetails": {
+          "pickup": {
+            "pickupDate": "2026/09/25",
+            "openTime": "08:00",
+            "closeTime": "16:30"
+          }
+        }
+      },
+      {
+        "stopType": "DESTINATION",
+        "name": "Lumber Inc",
+        "addressLine1": "456 Oak Ave",
+        "addressLine2": "",
+        "city": "Stockton",
+        "stateProvince": "CA",
+        "postalCode": "95201",
+        "country": "USA",
+        "contact": {
+          "firstName": "Lumber",
+          "lastName": "Inc",
+          "phone": "555-0200",
+          "email": ""
+        },
+        "appointmentDetails": {
+          "delivery": {
+            "deliveryDate": "2026/09/30",
+            "openTime": "09:00",
+            "closeTime": "17:00"
+          }
+        }
+      }
+    ],
+    "shippingDetails": {
+      "weightUnit": "LB",
+      "dimensionsUnit": "IN",
+      "totalWeight": 500,
+      "totalHandlingUnitCount": 1,
+      "handlingUnits": [
+        {
+          "type": "Pallet",
+          "count": 1,
+          "length": 48,
+          "width": 40,
+          "height": 48,
+          "stackable": false,
+          "commodities": [
+            {
+              "description": "Product Name",
+              "freightClass": "70",
+              "weight": 500,
+              "pieces": 1,
+              "packagingType": "Box",
+              "nmfc": "",
+              "hazmat": false
+            }
+          ]
+        }
+      ]
+    },
+    "fullValueCoverageDetails": {
+      "monetaryValue": "0",
+      "currency": 0
+    }
+  }'
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+5. DISPATCH (picking flow — Button 3)
+   Code: mycarrier_send_shipping()
+   Path: POST /api/v1/quote/dispatch
+   Note: quoteId + carrierQuoteNumber from the RATE_AND_SAVE response
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+curl -X POST "https://preprod-api.mycarrier.dev/api/v1/quote/dispatch" \
+  -u "<USERNAME>:<API_KEY>" \
+  -H "X-Mc-Api-Key: <API_KEY>" \
+  -H "Content-Type: application/json" \
+  -H "Accept: application/json" \
+  -H "User-Agent: Syncoria-Odoo/1.0" \
+  -d '{
+    "mode": "MANUAL_DISPATCH",
+    "paymentTerms": "PREPAID",
+    "identifiers": {
+      "quoteId": 739203375,
+      "carrierQuoteNumber": "<CARRIER_QUOTE_NUMBER_FROM_RATE_RESPONSE>",
+      "orderId": ["JH/OUT/00029"],
+      "referenceNumber": "JH/OUT/00029",
+      "poNumber": "PP-001",
+      "bolNumber": "PPBOL-001",
+      "shipmentId": null,
+      "gS1CompanyPrefix": null
+    },
+    "specialInstructions": "From Odoo 29",
+    "service": {
+      "carrier": "SAIA",
+      "mode": "LTL",
+      "level": "STD",
+      "vicsBol": false
+    },
+    "priceDetails": {
+      "totalCost": 447.79,
+      "chargeItems": [
+        {"code": "LND", "description": "Line Haul", "amount": 447.79}
+      ]
+    },
+    "stops": [
+      {
+        "stopType": "ORIGIN",
+        "addressId": "<LOCATION_ID_FROM_SYNC>",
+        "appointmentDetails": {
+          "pickup": {
+            "pickupDate": "2026/09/25",
+            "openTime": "08:00",
+            "closeTime": "16:30"
+          }
+        }
+      },
+      {
+        "stopType": "DESTINATION",
+        "name": "Lumber Inc",
+        "addressLine1": "456 Oak Ave",
+        "addressLine2": "",
+        "city": "Stockton",
+        "stateProvince": "CA",
+        "postalCode": "95201",
+        "country": "USA",
+        "contact": {
+          "firstName": "Lumber",
+          "lastName": "Inc",
+          "phone": "555-0200",
+          "email": ""
+        },
+        "appointmentDetails": {
+          "delivery": {
+            "deliveryDate": "2026/09/30",
+            "openTime": "09:00",
+            "closeTime": "17:00"
+          }
+        }
+      }
+    ],
+    "shippingDetails": {
+      "weightUnit": "LB",
+      "dimensionsUnit": "IN",
+      "totalWeight": 500,
+      "totalHandlingUnitCount": 1,
+      "handlingUnits": [
+        {
+          "type": "Pallet",
+          "count": 1,
+          "length": 48,
+          "width": 40,
+          "height": 48,
+          "stackable": false,
+          "commodities": [
+            {
+              "description": "Product Name",
+              "freightClass": "70",
+              "weight": 500,
+              "pieces": 1,
+              "packagingType": "Box",
+              "nmfc": "",
+              "hazmat": false
+            }
+          ]
+        }
+      ]
+    }
+  }'
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+6. GET SHIPMENT (after dispatch — fetch PRO# / tracking)
+   Code: mycarrier_send_shipping() — called with shipmentId from dispatch response
+   Path: GET /api/v1/shipments/{shipmentId}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+curl -X GET "https://preprod-api.mycarrier.dev/api/v1/shipments/<SHIPMENT_ID>" \
+  -u "<USERNAME>:<API_KEY>" \
+  -H "X-Mc-Api-Key: <API_KEY>" \
+  -H "Accept: application/json" \
+  -H "User-Agent: Syncoria-Odoo/1.0"
+
+
+===============================================================================
+QUICK DIAGNOSTIC — test auth + connectivity
+===============================================================================
+
+curl -X GET "https://preprod-api.mycarrier.dev/api/v1/address/shipping-locations?skip=0&take=1" \
+  -u "<USERNAME>:<API_KEY>" \
+  -H "X-Mc-Api-Key: <API_KEY>" \
+  -H "Accept: application/json" \
+  -w "\nHTTP %{http_code}\n"

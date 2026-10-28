@@ -1,0 +1,2 @@
+class ExpireAPIKey(Exception):
+    pass

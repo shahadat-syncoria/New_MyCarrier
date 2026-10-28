@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="delivery_carrier_form_mycarrier" model="ir.ui.view">
+        <field name="name">delivery.carrier.form.mycarrier</field>
+        <field name="model">delivery.carrier</field>
+        <field name="inherit_id" ref="delivery.view_delivery_carrier_form"/>
+        <field name="arch" type="xml">
+            <!-- Insert MyCarrier config page before the destination/pricing page -->
+            <xpath expr="//page[@name='destination']" position="before">
+                <page name="mycarrier_config" string="MyCarrier Configuration"
+                      invisible="delivery_type != 'mycarrier'">
+                    <group string="Credentials">
+                        <group>
+                            <field name="mycarrier_username" placeholder="your@email.com"/>
+                            <field name="mycarrier_api_key" password="True"/>
+                            <field name="mycarrier_environment"/>
+                        </group>
+                    </group>
+                    <group string="Shipment Settings">
+                        <group>
+                            <field name="mycarrier_origin_location_id"/>
+                            <field name="mycarrier_payment_terms"/>
+                            <field name="mycarrier_service_level"/>
+                            <field name="mycarrier_allow_brokerage"/>
+                        </group>
+                        <group>
+                            <field name="mycarrier_weight_unit"/>
+                            <field name="mycarrier_default_freight_class" placeholder="70"/>
+                            <field name="mycarrier_quote_build_mode"/>
+                            <field name="mycarrier_create_quote"/>
+                        </group>
+                    </group>
+                    <group string="Default Origin Accessorials"
+                           help="These defaults are applied to new pickings. You can override them on each picking.">
+                        <group>
+                            <field name="mycarrier_default_origin_location_type"/>
+                            <field name="mycarrier_default_origin_inside_pickup"/>
+                            <field name="mycarrier_default_origin_liftgate_pickup"/>
+                        </group>
+                        <group>
+                            <field name="mycarrier_default_origin_protect_from_freeze"/>
+                            <field name="mycarrier_default_origin_single_shipment"/>
+                            <field name="mycarrier_default_origin_inbond_freight"/>
+                        </group>
+                    </group>
+                    <group string="Default Destination Accessorials">
+                        <group>
+                            <field name="mycarrier_default_dest_location_type"/>
+                            <field name="mycarrier_default_dest_delivery_appointment"/>
+                            <field name="mycarrier_default_dest_inside_delivery"/>
+                        </group>
+                        <group>
+                            <field name="mycarrier_default_dest_liftgate_delivery"/>
+                            <field name="mycarrier_default_dest_notify_delivery"/>
+                            <field name="mycarrier_default_dest_sort_segregate_delivery"/>
+                        </group>
+                    </group>
+                    <group string="Shipping Locations">
+                        <div>
+                            <button name="mycarrier_action_sync_locations"
+                                    string="Sync Locations from MyCarrier"
+                                    type="object"
+                                    class="btn-secondary"
+                                    icon="fa-refresh"/>
+                            <p class="text-muted mt-2">
+                                Fetches available shipping origin locations from the MyCarrier API.
+                                Then select your origin location in the field above.
+                            </p>
+                        </div>
+                        <field name="mycarrier_location_ids" nolabel="1"
+                               widget="one2many"
+                               context="{'default_carrier_id': id}">
+                            <list string="Locations" editable="bottom" create="false" delete="false">
+                                <field name="name"/>
+                                <field name="address_id"/>
+                                <field name="address_line1"/>
+                                <field name="city"/>
+                                <field name="state"/>
+                                <field name="postal_code"/>
+                            </list>
+                        </field>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

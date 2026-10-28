@@ -1,0 +1,1 @@
+from odoo.addons.syncoria_pos_moneris_terminal.controllers import controllers

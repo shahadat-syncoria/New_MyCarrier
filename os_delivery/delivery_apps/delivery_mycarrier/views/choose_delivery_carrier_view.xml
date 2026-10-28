@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_choose_delivery_carrier_mycarrier" model="ir.ui.view">
+        <field name="name">choose.delivery.carrier.mycarrier</field>
+        <field name="model">choose.delivery.carrier</field>
+        <field name="inherit_id" ref="delivery.choose_delivery_carrier_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form/group" position="after">
+                <field name="mycarrier_is_active" invisible="1"/>
+                <field name="mycarrier_create_quote" invisible="1"/>
+                <div invisible="not mycarrier_is_active or not mycarrier_rate_ids">
+                    <separator string="Available Rates"/>
+                    <field name="mycarrier_rate_ids" nolabel="1">
+                        <list string="Rates"
+                              create="0" delete="0"
+                              decoration-success="is_selected"
+                              decoration-warning="has_unknown_charge and not is_selected"
+                              decoration-muted="pricing_type == 'Brokerage' and not is_selected">
+                            <field name="is_selected" column_invisible="1"/>
+                            <field name="carrier_scac" readonly="1"/>
+                            <field name="service_level_label" readonly="1"/>
+                            <field name="pricing_type" readonly="1"/>
+                            <field name="total_cost" readonly="1"/>
+                            <field name="currency_code" readonly="1"/>
+                            <field name="transit_days" readonly="1"/>
+                            <field name="estimated_delivery" readonly="1"/>
+                            <field name="quote_expiry" readonly="1"/>
+                            <field name="has_unknown_charge" column_invisible="1"/>
+                            <button name="action_select_this_rate"
+                                    type="object"
+                                    string="Select"
+                                    class="btn-primary btn-sm"
+                                    invisible="is_selected"/>
+                            <button name="action_select_this_rate"
+                                    type="object"
+                                    string="✓ Selected"
+                                    class="btn-success btn-sm"
+                                    invisible="not is_selected"/>
+                        </list>
+                    </field>
+                </div>
+            </xpath>
+            <xpath expr="//footer" position="inside">
+                <button name="action_create_quote" type="object" string="Create Quote" class="btn-primary"
+                        invisible="not mycarrier_is_active or not mycarrier_create_quote or not mycarrier_rate_ids"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

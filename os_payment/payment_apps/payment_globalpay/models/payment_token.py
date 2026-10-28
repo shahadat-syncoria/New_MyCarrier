@@ -1,0 +1,16 @@
+# Part of Odoo. See LICENSE file for full copyright and licensing details.
+
+from odoo import  fields, models
+
+
+class PaymentToken(models.Model):
+    _inherit = 'payment.token'
+
+    global_shopper_reference = fields.Char(
+        string="Shopper Reference", help="The unique reference of the partner owning this token",
+        readonly=True)
+    globalpay_brand_reference = fields.Char(
+        string="Global Payments Brand Reference",
+        readonly=True,
+        groups='base.group_system',
+    )

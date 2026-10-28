@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="pos_payment_method_form_view_inherit" model="ir.ui.view">
+        <field name="name">pos.payment.method.view.form.inherit</field>
+        <field name="model">pos.payment.method</field>
+        <field name="inherit_id" ref="point_of_sale.pos_payment_method_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='use_payment_terminal']" position="after">
+<!--                <br/>-->
+                <group>
+                    <field name="is_directly_payment"
+                       invisible="use_payment_terminal != 'moneris'"/>
+                <field name="moneris_device_id" />
+                <field name="account_id"/>
+                </group>
+
+            </xpath>
+        </field>
+    </record>
+</odoo>

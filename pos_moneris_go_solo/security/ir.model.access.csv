@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_moneris_device_usr,access_moneris_device_usr,model_moneris_device,base.group_user,1,0,0,0
+access_moneris_device_man,access_moneris_device_man,model_moneris_device,base.group_erp_manager,1,1,1,1
+access_pos_refund_wizard,pos.refund.wizard,model_pos_refund_wizard,,1,1,1,1
+access_pos_moneris_payment_journal_config,pos.moneris.payment.journal.config,model_pos_moneris_payment_journal_config,,1,1,1,1
+
+

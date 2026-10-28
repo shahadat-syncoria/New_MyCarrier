@@ -1,0 +1,31 @@
+$item_indicator_size: 14px;
+$item_indicator_border: #E0E2E6;
+$item_indicator_background: #714B67;
+.pos {
+    .popup {
+        &.syncoria-refund-moneris-payment-popup {
+            max-height: 440px;
+            width: 420px;
+        }
+    }
+}
+
+.list-payment {
+    min-height: 200px;
+    max-height: 320px;
+}
+
+.syncoria-refund-moneris-payment-item {
+    &__item_indicator {
+        font-weight: normal;
+        font-size: 16px;
+        padding: 8px;
+        text-align: left;
+        &:hover {
+            background: #cce5e6;
+        }
+        &--selected {
+            background: #a2c9cd;
+        }
+    }
+}

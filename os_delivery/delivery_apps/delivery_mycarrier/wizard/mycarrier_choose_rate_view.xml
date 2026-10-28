@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_mycarrier_choose_rate_form" model="ir.ui.view">
+        <field name="name">mycarrier.choose.rate.form</field>
+        <field name="model">mycarrier.choose.rate</field>
+        <field name="arch" type="xml">
+            <form string="Select MyCarrier Rate">
+                <sheet>
+                    <group>
+                        <field name="picking_id" invisible="1"/>
+                        <field name="carrier_id" invisible="1"/>
+                        <field name="quote_id" invisible="1"/>
+                        <field name="breakdown_line_id" invisible="1"/>
+                    </group>
+                    <div class="alert alert-warning" role="alert"
+                         invisible="not rate_warning or breakdown_line_id">
+                        <field name="rate_warning" readonly="1"/>
+                    </div>
+
+                    <!-- Rate list (hidden when breakdown is open) -->
+                    <field name="rate_line_ids" widget="one2many" nolabel="1"
+                           invisible="breakdown_line_id">
+                        <list string="Available Rates" editable="top"
+                              create="0" delete="0"
+                              decoration-success="is_selected"
+                              decoration-warning="has_unknown_charge and not is_selected"
+                              decoration-muted="pricing_type == 'Brokerage' and not is_selected">
+                            <field name="is_selected" column_invisible="1"/>
+                            <button name="action_select_this_rate" type="object" string="Select"
+                                    class="btn-primary btn-sm" invisible="is_selected"/>
+                            <button name="action_select_this_rate" type="object" string="✓ Selected"
+                                    class="btn-success btn-sm" invisible="not is_selected"/>
+                            <field name="carrier_scac"/>
+                            <field name="service_level_label"/>
+                            <field name="pricing_type"/>
+                            <field name="total_cost"/>
+                            <field name="currency_code"/>
+                            <field name="transit_days"/>
+                            <field name="estimated_delivery"/>
+                            <field name="quote_expiry"/>
+                            <field name="carrier_quote_number"/>
+                            <field name="has_unknown_charge" optional="hide"/>
+                            <field name="service_level" column_invisible="1"/>
+                            <field name="charge_items_json" column_invisible="1"/>
+                            <button name="action_show_breakdown"
+                                    type="object"
+                                    icon="fa-list-ul"
+                                    title="Price Breakdown"
+                                    class="btn-sm btn-secondary"
+                                    invisible="not charge_items_json or charge_items_json == '[]'"/>
+                        </list>
+                    </field>
+                    <div class="text-muted mt-2"
+                         invisible="breakdown_line_id or not rate_line_ids">
+                        <small>
+                            <b>Note:</b> Rows in <i>italic</i> are brokerage rates.
+                            Rows highlighted in orange have an unknown charge (UNKCHRG) — verify
+                            the final invoice from the carrier.
+                        </small>
+                    </div>
+
+                    <!-- Inline breakdown (shown when a row's detail button is clicked) -->
+                    <div invisible="not breakdown_line_id">
+                        <field name="breakdown_html" nolabel="1" readonly="1"/>
+                        <button name="action_close_breakdown"
+                                string="← Back to Rates"
+                                type="object"
+                                class="btn-secondary btn-sm mt-2"/>
+                    </div>
+                </sheet>
+                <footer>
+                    <button name="action_confirm" string="Confirm Selection"
+                            type="object" class="btn-primary"
+                            invisible="breakdown_line_id"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

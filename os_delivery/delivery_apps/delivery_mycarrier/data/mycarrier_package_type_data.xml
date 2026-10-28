@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- MyCarrier shipping unit types as Package Types. Pallet (48*40) / (36*36) are sent to MyCarrier as "Pallet".
+         Set Length/Width/Height on the other types before using them: MyCarrier requires all three. -->
+    <record id="mc_package_type_bag" model="stock.package.type">
+        <field name="name">Bag</field>
+        <field name="packaging_length">0</field>
+        <field name="width">0</field>
+        <field name="height">0</field>
+    </record>
+    <record id="mc_package_type_bale" model="stock.package.type">
+        <field name="name">Bale</field>
+        <field name="packaging_length">0</field>
+        <field name="width">0</field>
+        <field name="height">0</field>
+    </record>
+    <record id="mc_package_type_box" model="stock.package.type">
+        <field name="name">Box</field>
+        <field name="packaging_length">0</field>
+        <field name="width">0</field>
+        <field name="height">0</field>
+    </record>
+    <record id="mc_package_type_bucket" model="stock.package.type">
+        <field name="name">Bucket</field>
+        <field name="packaging_length">0</field>
+        <field name="width">0</field>
+        <field name="height">0</field>
+    </record>
+    <record id="mc_package_type_bundle" model="stock.package.type">
+        <field name="name">Bundle</field>
+        <field name="packaging_length">0</field>
+        <field name="width">0</field>
+        <field name="height">0</field>
+    </record>
+    <record id="mc_package_type_carton" model="stock.package.type">
+        <field name="name">Carton</field>
+        <field name="packaging_length">0</field>
+        <field name="width">0</field>
+        <field name="height">0</field>
+    </record>
+    <record id="mc_package_type_case" model="stock.package.type">
+        <field name="name">Case</field>
+        <field name="packaging_length">0</field>
+        <field name="width">0</field>
+        <field name="height">0</field>
+    </record>
+    <record id="mc_package_type_crate" model="stock.package.type">
+        <field name="name">Crate</field>
+        <field name="packaging_length">0</field>
+        <field name="width">0</field>
+        <field name="height">0</field>
+    </record>
+    <record id="mc_package_type_cylinder" model="stock.package.type">
+        <field name="name">Cylinder</field>
+        <field name="packaging_length">0</field>
+        <field name="width">0</field>
+        <field name="height">0</field>
+    </record>
+    <record id="mc_package_type_drums" model="stock.package.type">
+        <field name="name">Drums</field>
+        <field name="packaging_length">0</field>
+        <field name="width">0</field>
+        <field name="height">0</field>
+    </record>
+    <record id="mc_package_type_pail" model="stock.package.type">
+        <field name="name">Pail</field>
+        <field name="packaging_length">0</field>
+        <field name="width">0</field>
+        <field name="height">0</field>
+    </record>
+    <record id="mc_package_type_pallet_48_40" model="stock.package.type">
+        <field name="name">Pallet (48*40)</field>
+        <field name="packaging_length">48</field>
+        <field name="width">40</field>
+        <field name="height">48</field>
+    </record>
+    <record id="mc_package_type_pallet_36_36" model="stock.package.type">
+        <field name="name">Pallet (36*36)</field>
+        <field name="packaging_length">36</field>
+        <field name="width">36</field>
+        <field name="height">48</field>
+    </record>
+    <record id="mc_package_type_pallet" model="stock.package.type">
+        <field name="name">Pallet</field>
+        <field name="packaging_length">0</field>
+        <field name="width">0</field>
+        <field name="height">0</field>
+    </record>
+    <record id="mc_package_type_pieces" model="stock.package.type">
+        <field name="name">Pieces</field>
+        <field name="packaging_length">0</field>
+        <field name="width">0</field>
+        <field name="height">0</field>
+    </record>
+    <record id="mc_package_type_reel" model="stock.package.type">
+        <field name="name">Reel</field>
+        <field name="packaging_length">0</field>
+        <field name="width">0</field>
+        <field name="height">0</field>
+    </record>
+    <record id="mc_package_type_roll" model="stock.package.type">
+        <field name="name">Roll</field>
+        <field name="packaging_length">0</field>
+        <field name="width">0</field>
+        <field name="height">0</field>
+    </record>
+    <record id="mc_package_type_skid" model="stock.package.type">
+        <field name="name">Skid</field>
+        <field name="packaging_length">0</field>
+        <field name="width">0</field>
+        <field name="height">0</field>
+    </record>
+</odoo>

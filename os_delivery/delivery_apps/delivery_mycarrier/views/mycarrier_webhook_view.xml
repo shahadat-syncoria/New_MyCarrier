@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="mycarrier_webhook_action" model="ir.actions.act_window">
+        <field name="name">MyCarrier Webhook</field>
+        <field name="res_model">mycarrier.webhook</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="mycarrier_webhook_list_view" model="ir.ui.view">
+        <field name="name">mycarrier.webhook.list</field>
+        <field name="model">mycarrier.webhook</field>
+        <field name="arch" type="xml">
+            <list create="0" decoration-danger="state == 'error'" decoration-success="state == 'done'"
+                  decoration-info="state == 'draft'" decoration-muted="state == 'skipped'">
+                <header>
+                    <button name="action_process_pending" type="object" string="Process Pending Webhooks"
+                            display="always" class="btn-primary"/>
+                </header>
+                <field name="name"/>
+                <field name="create_date"/>
+                <field name="picking_id"/>
+                <field name="state"/>
+                <field name="error" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="mycarrier_webhook_form_view" model="ir.ui.view">
+        <field name="name">mycarrier.webhook.form</field>
+        <field name="model">mycarrier.webhook</field>
+        <field name="arch" type="xml">
+            <form edit="0" create="0">
+                <header>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,done,error"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="create_date"/>
+                        <field name="picking_id"/>
+                        <field name="error" invisible="not error"/>
+                        <field name="data"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <menuitem id="mycarrier_webhook_menu" name="MyCarrier Webhook" parent="stock.menu_delivery"
+              action="mycarrier_webhook_action"/>
+
+    <record id="action_process_mycarrier_webhooks" model="ir.actions.server">
+        <field name="name">Process Data</field>
+        <field name="model_id" ref="model_mycarrier_webhook"/>
+        <field name="binding_model_id" ref="model_mycarrier_webhook"/>
+        <field name="binding_view_types">list,form</field>
+        <field name="state">code</field>
+        <field name="code">
+if records:
+    records._process_data()
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="os_payment_pos.PaymentScreenPaymentLines"
+       t-inherit="point_of_sale.PaymentScreenPaymentLines"
+       t-inherit-mode="extension">
+        <xpath expr="//div[contains(@class, 'send_payment_cancel')]" position="attributes">
+            <attribute name="t-if">!(line.payment_method_id.use_payment_terminal === 'clover_cloud' || line.payment_method_id.use_payment_terminal === 'moneris_cloud' || line.payment_method_id.is_moneris_go_cloud)</attribute>
+        </xpath>
+        <xpath expr="//t[@t-elif=&quot;line.payment_status == 'waitingCard'&quot;]/div[2]" position="replace">
+            <t t-if="line.payment_method_id.use_payment_terminal === 'moneris_cloud' || line.payment_method_id.is_moneris_go_cloud || line.payment_method_id.use_payment_terminal === 'clover_cloud'">
+                <div class="d-flex flex-column gap-2 px-3 py-2">
+                    <div class="button send_force_done d-flex align-items-center justify-content-center rounded-3 fw-semibold py-2 px-3 border border-danger-subtle bg-white text-danger shadow-sm"
+                         title="Force Done"
+                         t-on-click="() => this.props.sendForceDone(line)">
+                        Force done
+                    </div>
+                    <div t-if="this.pos.session.has_moneris_rescue_access"
+                         class="button send_payment_retry d-flex align-items-center justify-content-center rounded-3 fw-semibold py-2 px-3 text-bg-primary shadow-sm"
+                         title="Rescue Payment Request"
+                         t-on-click="() => this.onClickMonerisRescue(line)">
+                        Rescue
+                    </div>
+                </div>
+            </t>
+            <div t-else="">
+                <div class="button send_force_done" title="Force Done" t-on-click="() => this.props.sendForceDone(line)">
+                    Force done
+                </div>
+                <div class="button send_payment_cancel" title="Cancel Payment Request" t-on-click="() => this.props.sendPaymentCancel(line)">
+                    Cancel
+                </div>
+            </div>
+        </xpath>
+    </t>
+</templates>

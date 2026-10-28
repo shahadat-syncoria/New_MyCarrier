@@ -1,0 +1,11 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_mycarrier_location_user,mycarrier.location user,model_mycarrier_location,base.group_user,1,0,0,0
+access_mycarrier_location_manager,mycarrier.location manager,model_mycarrier_location,stock.group_stock_manager,1,1,1,1
+access_mycarrier_location_type_user,mycarrier.location.type user,model_mycarrier_location_type,base.group_user,1,0,0,0
+access_mycarrier_location_type_manager,mycarrier.location.type manager,model_mycarrier_location_type,stock.group_stock_manager,1,1,1,1
+access_mycarrier_so_rate,mycarrier.so.rate user,model_mycarrier_so_rate,base.group_user,1,1,1,1
+access_mycarrier_choose_rate,mycarrier.choose.rate user,model_mycarrier_choose_rate,base.group_user,1,1,1,1
+access_mycarrier_rate_line,mycarrier.rate.line user,model_mycarrier_rate_line,base.group_user,1,1,1,1
+
+access_mycarrier_webhook,mycarrier.webhook manager,model_mycarrier_webhook,stock.group_stock_manager,1,1,1,1
+access_mycarrier_so_accessorial,mycarrier.so.accessorial user,model_mycarrier_so_accessorial,base.group_user,1,1,1,1

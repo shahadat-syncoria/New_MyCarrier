@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="mycarrier_loc_type_business" model="mycarrier.location.type">
+        <field name="name">Business</field>
+        <field name="sequence">1</field>
+    </record>
+    <record id="mycarrier_loc_type_residential" model="mycarrier.location.type">
+        <field name="name">Residential</field>
+        <field name="sequence">2</field>
+    </record>
+    <record id="mycarrier_loc_type_construction" model="mycarrier.location.type">
+        <field name="name">Construction Site</field>
+        <field name="sequence">3</field>
+    </record>
+    <record id="mycarrier_loc_type_warehouse" model="mycarrier.location.type">
+        <field name="name">Warehouse</field>
+        <field name="sequence">4</field>
+    </record>
+</odoo>

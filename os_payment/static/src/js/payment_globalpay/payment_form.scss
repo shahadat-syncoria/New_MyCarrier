@@ -1,0 +1,261 @@
+#globalpay_hosted_fields_modal {
+    --gp-ink: #172033;
+    --gp-muted: #748096;
+    --gp-panel: #f3f6fb;
+    --gp-accent: #2878ff;
+
+    .globalpay-checkout {
+        overflow: hidden;
+        border: 0;
+        border-radius: 18px;
+        box-shadow: 0 24px 70px rgba(19, 33, 68, 0.24);
+    }
+
+    .globalpay-checkout__header {
+        padding: 20px 24px;
+        border-bottom: 1px solid #e8ecf3;
+
+        .modal-title {
+            color: var(--gp-ink);
+            font-size: 1.15rem;
+            font-weight: 700;
+        }
+    }
+
+    .globalpay-checkout__body {
+        padding: 0;
+    }
+
+    .globalpay-checkout__layout {
+        display: grid;
+        grid-template-columns: minmax(330px, 0.95fr) minmax(360px, 1.05fr);
+        min-height: 430px;
+    }
+
+    .globalpay-checkout__preview-panel {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 42px 32px;
+        background:
+            radial-gradient(circle at 20% 12%, rgba(40, 120, 255, 0.12), transparent 40%),
+            var(--gp-panel);
+    }
+
+    .globalpay-checkout__form-panel {
+        padding: 32px 34px 26px;
+        background: #fff;
+
+        .form-label {
+            margin-bottom: 6px;
+            color: #42506a;
+            font-size: 0.76rem;
+            font-weight: 700;
+            letter-spacing: 0.035em;
+            text-transform: uppercase;
+        }
+    }
+
+    .globalpay-hosted-field,
+    .globalpay-hosted-submit {
+        width: 100%;
+        min-height: 50px;
+
+        iframe {
+            display: block;
+            width: 100%;
+        }
+    }
+
+    .globalpay-checkout__security-note {
+        margin: 14px 0 0;
+        color: var(--gp-muted);
+        font-size: 0.78rem;
+        text-align: center;
+    }
+
+    .globalpay-checkout__preview-copy {
+        margin: 20px 0 0;
+        color: #71809b;
+        font-size: 0.78rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+    }
+
+    .globalpay-card-preview {
+        position: relative;
+        width: 100%;
+        max-width: 340px;
+        aspect-ratio: 1.586;
+        overflow: hidden;
+        padding: 24px 26px;
+        border-radius: 18px;
+        color: #fff;
+        background:
+            linear-gradient(135deg, rgba(255, 255, 255, 0.16), transparent 42%),
+            linear-gradient(135deg, #59687e, #20293b 70%);
+        box-shadow:
+            0 22px 38px rgba(22, 37, 68, 0.28),
+            inset 0 1px 0 rgba(255, 255, 255, 0.28);
+        transition: background 220ms ease, transform 220ms ease;
+    }
+
+    .globalpay-card-preview:hover {
+        transform: translateY(-3px);
+    }
+
+    .globalpay-card-preview__shine {
+        position: absolute;
+        top: -60%;
+        left: -30%;
+        width: 80%;
+        height: 190%;
+        background: linear-gradient(
+            100deg,
+            transparent 20%,
+            rgba(255, 255, 255, 0.13) 50%,
+            transparent 80%
+        );
+        transform: rotate(16deg);
+    }
+
+    .globalpay-card-preview__top,
+    .globalpay-card-preview__details {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+    }
+
+    .globalpay-card-preview__chip {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        width: 48px;
+        height: 36px;
+        overflow: hidden;
+        border: 1px solid rgba(93, 71, 16, 0.3);
+        border-radius: 8px;
+        background: linear-gradient(135deg, #f7e7a3, #c9a94f);
+
+        span {
+            border-right: 1px solid rgba(93, 71, 16, 0.25);
+        }
+    }
+
+    .globalpay-card-preview__brand {
+        max-width: 110px;
+        font-size: 1.05rem;
+        font-style: italic;
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        text-align: right;
+    }
+
+    .globalpay-card-preview__number {
+        position: relative;
+        z-index: 1;
+        margin-top: 36px;
+        font-family: "Courier New", monospace;
+        font-size: 1.18rem;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+        white-space: nowrap;
+    }
+
+    .globalpay-card-preview__details {
+        align-items: flex-end;
+        margin-top: 27px;
+
+        > div {
+            display: flex;
+            flex-direction: column;
+        }
+
+        > div:last-child {
+            text-align: right;
+        }
+
+        span {
+            margin-bottom: 2px;
+            color: rgba(255, 255, 255, 0.68);
+            font-size: 0.56rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        strong {
+            font-size: 0.72rem;
+            letter-spacing: 0.06em;
+        }
+    }
+
+    .globalpay-card-preview--visa {
+        background:
+            linear-gradient(135deg, rgba(255, 255, 255, 0.15), transparent 45%),
+            linear-gradient(135deg, #174ea6, #09255c 72%);
+    }
+
+    .globalpay-card-preview--mastercard {
+        background:
+            radial-gradient(circle at 83% 17%, #ff9f1c 0 9%, transparent 9.5%),
+            radial-gradient(circle at 73% 17%, #eb001b 0 9%, transparent 9.5%),
+            linear-gradient(135deg, #3b2533, #16151d 72%);
+    }
+
+    .globalpay-card-preview--amex {
+        background:
+            linear-gradient(135deg, rgba(255, 255, 255, 0.18), transparent 42%),
+            linear-gradient(135deg, #36a8c8, #09627d 72%);
+    }
+
+    .globalpay-card-preview--discover {
+        background:
+            radial-gradient(circle at 100% 100%, #f58220 0 28%, transparent 28.5%),
+            linear-gradient(135deg, #404650, #171b22 72%);
+    }
+
+    .globalpay-card-preview--jcb,
+    .globalpay-card-preview--unionpay,
+    .globalpay-card-preview--diners,
+    .globalpay-card-preview--dinersclub {
+        background:
+            linear-gradient(135deg, rgba(255, 255, 255, 0.14), transparent 45%),
+            linear-gradient(135deg, #297a6b, #133d43 72%);
+    }
+
+    @media (max-width: 767.98px) {
+        .modal-dialog {
+            margin: 12px;
+        }
+
+        .globalpay-checkout__layout {
+            display: block;
+        }
+
+        .globalpay-checkout__preview-panel {
+            padding: 24px 22px 28px;
+        }
+
+        .globalpay-checkout__form-panel {
+            padding: 26px 22px 22px;
+        }
+
+        .globalpay-card-preview {
+            max-width: 310px;
+            padding: 20px 22px;
+        }
+
+        .globalpay-card-preview__number {
+            margin-top: 28px;
+            font-size: 1rem;
+        }
+
+        .globalpay-card-preview__details {
+            margin-top: 22px;
+        }
+    }
+}

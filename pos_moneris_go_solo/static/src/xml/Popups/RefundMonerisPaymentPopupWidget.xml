@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="RefundMonerisPaymentPopupWidget" owl="1">
+         <div class="popup syncoria-refund-moneris-payment-popup">
+                <header class="title">
+                    Moneris Payments
+                </header>
+             <div class="main-body touch-scrollable scrollable-y list-payment">
+                 <t t-foreach="props.moneris_payments" t-as="item" t-key="item.id">
+                    <div class="item-moneris-payment"
+                         t-on-click="() => this.onClick(item)"
+                         t-att-id="item.id"
+                         t-attf-class="syncoria-refund-moneris-payment-item__item_indicator
+                    {{item_selected.id === item.id ? 'syncoria-refund-moneris-payment-item__item_indicator--selected' : ''}}"
+                    >
+                        <t t-else="" t-esc="item.order_name"/> -
+                        <t t-esc="item.card_name"/> -
+                        <t t-esc="env.pos.format_currency(item.amount)"/>
+                    </div>
+                </t>
+            </div>
+             <footer class="footer centered">
+                <div class="button cancel" t-on-click="cancel">
+                    Cancel
+                </div>
+                 <div class="button confirm highlight" t-on-click="confirm">
+                    Confirm
+                </div>
+            </footer>
+         </div>
+    </t>
+</templates>

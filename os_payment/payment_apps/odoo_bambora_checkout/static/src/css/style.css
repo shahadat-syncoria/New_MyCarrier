@@ -1,0 +1,301 @@
+/* .bambora-dialog{
+   margin-top: 15%;
+   width: 80%;
+} */
+
+#bamboraModal.bambora-modal {
+    position: fixed !important;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    padding-right: 0 !important;
+}
+
+#bamboraModal.bambora-modal.show {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 1rem;
+}
+
+#bamboraModal .bambora-dialog {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: calc(100vw - 2rem);
+    max-width: 650px;
+    margin: 0 !important;
+    min-height: auto;
+    display: block;
+    transform: translate(-50%, -50%);
+}
+
+#bamboraModal .bambora-modal-content {
+    margin-top: 0;
+    position: relative;
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    min-height: 0;
+    padding: 0.5rem 0.875rem 0.875rem;
+    border: none;
+    border-radius: 18px;
+    box-shadow: 0 24px 60px rgba(15, 23, 42, 0.18);
+}
+
+#bamboraModal .modal-body {
+    padding: 0;
+    flex: 0 0 auto;
+}
+
+.bambora-modal-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 2;
+}
+
+.bambora-modal-close-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: #4a4a4a;
+    font-size: 0;
+    line-height: 1;
+    text-shadow: none;
+    box-shadow: none;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.2s ease, color 0.2s ease, opacity 0.2s ease;
+}
+
+.bambora-modal-close-btn > span {
+    display: none;
+}
+
+.bambora-modal-close-btn::before,
+.bambora-modal-close-btn::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 14px;
+    height: 2px;
+    background: currentColor;
+    border-radius: 999px;
+    transform-origin: center;
+}
+
+.bambora-modal-close-btn::before {
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.bambora-modal-close-btn::after {
+    transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.bambora-modal-close-btn:hover,
+.bambora-modal-close-btn:focus {
+    background: rgba(0, 0, 0, 0.08);
+    color: #1f1f1f;
+    opacity: 1;
+    outline: none;
+}
+
+/* Compatibility with the older QWeb modal header still used by this template. */
+.bambora-modal-content > .row:first-child {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 2;
+    margin: 0;
+}
+
+.bambora-modal-content > .row:first-child > .col-11 {
+    display: none;
+}
+
+.bambora-modal-content > .row:first-child > .col-1 {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: auto;
+    max-width: none;
+    flex: 0 0 auto;
+    padding: 0;
+}
+
+.bambora-modal-content > .row:first-child > .col-1 > #bamboraCancel,
+.bambora-modal-content > .row:first-child > .col-1 > .close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    margin: 0;
+    border: none;
+    background: transparent;
+    color: #4a4a4a;
+    font-size: 0;
+    line-height: 1;
+    text-shadow: none;
+    box-shadow: none;
+    opacity: 1;
+    border-radius: 4px;
+    transition: background-color 0.2s ease, color 0.2s ease, opacity 0.2s ease;
+}
+
+.bambora-modal-content > .row:first-child > .col-1 > #bamboraCancel > span,
+.bambora-modal-content > .row:first-child > .col-1 > .close > span {
+    display: none;
+}
+
+.bambora-modal-content > .row:first-child > .col-1 > #bamboraCancel::before,
+.bambora-modal-content > .row:first-child > .col-1 > #bamboraCancel::after,
+.bambora-modal-content > .row:first-child > .col-1 > .close::before,
+.bambora-modal-content > .row:first-child > .col-1 > .close::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 14px;
+    height: 2px;
+    background: currentColor;
+    border-radius: 999px;
+    transform-origin: center;
+}
+
+.bambora-modal-content > .row:first-child > .col-1 > #bamboraCancel::before,
+.bambora-modal-content > .row:first-child > .col-1 > .close::before {
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.bambora-modal-content > .row:first-child > .col-1 > #bamboraCancel::after,
+.bambora-modal-content > .row:first-child > .col-1 > .close::after {
+    transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.bambora-modal-content > .row:first-child > .col-1 > #bamboraCancel:hover,
+.bambora-modal-content > .row:first-child > .col-1 > #bamboraCancel:focus,
+.bambora-modal-content > .row:first-child > .col-1 > .close:hover,
+.bambora-modal-content > .row:first-child > .col-1 > .close:focus {
+    background: rgba(0, 0, 0, 0.08);
+    color: #1f1f1f;
+    opacity: 1;
+    outline: none;
+}
+
+#bamboraModal .container-bambora {
+    width: 88%;
+    max-width: 540px;
+    margin: 6px auto;
+    border: none;
+    border-radius: 0;
+}
+
+#checkout-form {
+    margin: 0;
+}
+
+#checkout-form .row {
+    row-gap: 16px;
+    align-items: center;
+}
+
+#card-number-bootstrap,
+#card-cvv-bootstrap,
+#card-expiry-bootstrap {
+    width: 100%;
+    margin-bottom: 0;
+}
+
+#card-number,
+#card-cvv,
+#card-expiry {
+    width: 100% !important;
+    min-height: 44px;
+    border: 1px solid #d8dde6;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: none;
+}
+
+#card-number {
+    background-image: none;
+    background-origin: content-box;
+    background-position: calc(100% - 14px) center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+#feedback {
+    position: relative;
+    left: 15px;
+    display: inline-block;
+    background-color: transparent;
+    border: 0 solid rgba(200, 200, 200, 1);
+    border-radius: 4px;
+    transition: all 100ms ease-out;
+    padding: 11px;
+}
+
+#feedback.error {
+    color: red;
+    border: 1px solid;
+}
+
+#feedback.success {
+    color: seagreen;
+    border: 1px solid;
+}
+
+#pay-button {
+    width: 100% !important;
+    min-height: 46px;
+    margin-top: 12px !important;
+    border-radius: 10px;
+    background-color: var(--bs-btn-active-bg, var(--bs-btn-bg, #714b67));
+    border-color: var(--bs-btn-active-border-color, var(--bs-btn-border-color, #714b67));
+    color: #fff;
+    opacity: 1;
+    font-weight: 600;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+    transition: background-color 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
+}
+
+#pay-button:hover,
+#pay-button:focus,
+#pay-button:active {
+    background-color: var(--bs-btn-active-bg, var(--bs-btn-bg, #714b67));
+    border-color: var(--bs-btn-active-border-color, var(--bs-btn-border-color, #714b67));
+    color: #fff;
+}
+
+#pay-button.disabled,
+#pay-button:disabled {
+    opacity: 0.55;
+    background-color: color-mix(in srgb, var(--bs-btn-bg, #714b67) 45%, white 55%);
+    border-color: color-mix(in srgb, var(--bs-btn-bg, #714b67) 45%, white 55%);
+    color: #fff;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+.bambora-modal {
+    border-radius: 5px !important;
+}
+
+.card-number-class {
+    width: 100%;
+}

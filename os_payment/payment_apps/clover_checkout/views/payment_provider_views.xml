@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--    <record id="payment_provider_form" model="ir.ui.view">-->
+    <!--        <field name="name">Clover Checkout Provider Form</field>-->
+    <!--        <field name="model">payment.provider</field>-->
+    <!--        <field name="inherit_id" ref="payment.payment_provider_form"/>-->
+    <!--        <field name="arch" type="xml">-->
+    <!--            <group name="provider_credentials" position='inside'>-->
+    <!--            </group>-->
+    <!--</field>-->
+    <!--    </record>-->
+    <record id="transaction_form_clover_checkout" model="ir.ui.view">
+        <field name="name">acquirer.transaction.form.clover_checkout</field>
+        <field name="model">payment.transaction</field>
+        <field name="inherit_id" ref="payment.payment_transaction_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='provider_reference']" position="after">
+                <field invisible="provider_code != 'clover_checkout'" name="clover_checkout_reference" readonly="1"/>
+                <!-- Not used by refund or anything else downstream; kept on the model but hidden from the form. -->
+                <!--<field invisible="provider_code != 'clover_checkout'" name="clover_checkout_merchant_transaction_id" readonly="1"/>-->
+                <!--<field invisible="provider_code != 'clover_checkout'" name="clover_checkout_merchant_id" readonly="1"/>-->
+                <!--<field groups="base.group_no_one" invisible="provider_code != 'clover_checkout'" name="clover_checkout_id"/>-->
+                <!--<field groups="base.group_no_one" invisible="provider_code != 'clover_checkout'" name="clover_data_id"/>-->
+            </xpath>
+            <xpath expr="//group[@name='transaction_partner']/.." position="after">
+                <notebook invisible="provider_code != 'clover_checkout'">
+                    <page string="Clover Logs" name="clover_logs">
+                        <group>
+                            <group string="Last Clover Result">
+                                <field name="clover_last_status" readonly="1"
+                                       decoration-success="clover_last_status == 'success'"
+                                       decoration-danger="clover_last_status == 'error'"
+                                       widget="badge"/>
+                                <field name="clover_last_error_code" readonly="1"/>
+                                <field name="clover_last_decline_code" readonly="1"/>
+                                <field name="clover_last_error_message" readonly="1"/>
+                                <field name="clover_last_charge_id" readonly="1"/>
+                                <field name="clover_request_duration" readonly="1"/>
+                            </group>
+                        </group>
+                        <separator string="Full Log"/>
+                        <field name="clover_checkout_log" nolabel="1" readonly="1" widget="text"/>
+                    </page>
+                </notebook>
+            </xpath>
+            <xpath expr="//group[@name='transaction_partner']/.." position="after">
+                <notebook invisible="provider_code != 'clover_checkout'">
+                    <page string="Clover Logs" name="clover_logs">
+                        <group>
+                            <group string="Last Clover Result">
+                                <field name="clover_last_error_code" readonly="1"/>
+                                <field name="clover_last_decline_code" readonly="1"/>
+                                <field name="clover_last_error_message" readonly="1"/>
+                                <field name="clover_last_charge_id" readonly="1"/>
+                                <field name="clover_request_duration" readonly="1"/>
+                            </group>
+                        </group>
+                        <separator string="Full Log"/>
+                        <field name="clover_checkout_log" nolabel="1" readonly="1" widget="text"/>
+                    </page>
+                </notebook>
+            </xpath>
+            <!--            <xpath expr="//form" position="attributes">-->
+            <!--                <attribute name="edit">true</attribute>-->
+            <!--            </xpath>--></field>
+    </record>
+    <record id="payment_token_clover_checkout" model="ir.ui.view">
+        <field name="name">acquirer.token.form.clover_checkout</field>
+        <field name="model">payment.token</field>
+        <field name="inherit_id" ref="payment.payment_token_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field invisible="1" name="provider_code"/>
+                <field invisible="provider_code != 'clover_checkout'" name="clover_checkout_id" readonly="1"/>
+                <field invisible="provider_code != 'clover_checkout'" name="clover_customer_id" readonly="1"/>
+            </xpath>
+            <!--            <xpath expr="//form" position="attributes">-->
+            <!--                <attribute name="edit">true</attribute>-->
+            <!--            </xpath>--></field>
+    </record>
+</odoo>

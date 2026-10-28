@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="stock_picking_form_mycarrier" model="ir.ui.view">
+        <field name="name">stock.picking.form.mycarrier</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+
+            <!-- Three MyCarrier buttons before Validate -->
+            <xpath expr="//button[@name='button_validate']" position="before">
+                <!-- Step 1: Create order -->
+                <button name="mycarrier_action_create_order"
+                        string="Create MyCarrier Order"
+                        type="object"
+                        class="btn-primary"
+                        icon="fa-plus-circle"
+                        invisible="not mycarrier_is_active or mycarrier_create_quote or mycarrier_webhook_received or state in ('done', 'cancel') or mycarrier_status != 'pending'"/>
+                <!-- Step 1b: Update order (already created but not yet rated) -->
+                <button name="mycarrier_action_update_order"
+                        string="Update MyCarrier Order"
+                        type="object"
+                        class="btn-secondary"
+                        icon="fa-refresh"
+                        invisible="not mycarrier_is_active or mycarrier_create_quote or mycarrier_webhook_received or state in ('done', 'cancel') or mycarrier_status != 'ordered'"/>
+                <!-- Step 2: Select rate from stored rates -->
+                <button name="mycarrier_action_select_rate"
+                        string="Select Rate"
+                        type="object"
+                        class="btn-primary"
+                        icon="fa-list"
+                        invisible="not mycarrier_is_active or mycarrier_create_quote or mycarrier_webhook_received or mycarrier_status not in ('ordered', 'rated')"/>
+                <!-- Step 3: Dispatch -->
+                <!-- Quote option: refresh the quote with this delivery's data -->
+                <button name="mycarrier_action_update_quote"
+                        string="Update Quote"
+                        type="object"
+                        class="btn-secondary"
+                        icon="fa-refresh"
+                        invisible="not mycarrier_is_active or not mycarrier_create_quote or mycarrier_webhook_received or state in ('done', 'cancel') or mycarrier_status == 'dispatched'"/>
+                <!-- Step 3: Dispatch (quote option: first click picks the rate, second click dispatches) -->
+                <button name="mycarrier_action_dispatch"
+                        string="Dispatch to MyCarrier"
+                        type="object"
+                        class="btn-success"
+                        icon="fa-paper-plane"
+                        invisible="not mycarrier_is_active or mycarrier_webhook_received or state in ('done', 'cancel') or mycarrier_status == 'dispatched' or (not mycarrier_create_quote and mycarrier_status != 'rated')"/>
+                <field name="mycarrier_create_quote" invisible="1"/>
+                <field name="mycarrier_webhook_received" invisible="1"/>
+            </xpath>
+
+            <!-- MyCarrier tab -->
+            <xpath expr="//page[@name='extra']" position="after">
+                <page name="mycarrier_tab" string="MyCarrier"
+                      invisible="not mycarrier_is_active">
+
+                    <!-- Status bar -->
+                    <field name="mycarrier_status" widget="statusbar"
+                           statusbar_visible="pending,ordered,rated,dispatched"/>
+
+                    <!-- Order References -->
+                    <group string="Order References">
+                        <group>
+                            <field name="mycarrier_po_number" placeholder="PO Number"/>
+                            <field name="mycarrier_customer_bol_number" placeholder="Customer BOL"/>
+                            <field name="mycarrier_cargo_value" widget="monetary"
+                                   options="{'currency_field': 'currency_id'}"
+                                   placeholder="0.00 = no coverage"/>
+                        </group>
+                        <group>
+                            <field name="mycarrier_special_instructions" placeholder="Special instructions for carrier…"/>
+                        </group>
+                    </group>
+
+                    <!-- Origin Accessorials -->
+                    <group string="Origin Accessorials">
+                        <group>
+                            <field name="origin_location_type"/>
+                            <field name="origin_inside_pickup"/>
+                            <field name="origin_liftgate_pickup"/>
+                        </group>
+                        <group>
+                            <field name="origin_protect_from_freeze"/>
+                            <field name="origin_single_shipment"/>
+                            <field name="origin_inbond_freight"/>
+                        </group>
+                    </group>
+
+                    <!-- Destination Accessorials -->
+                    <group string="Destination Accessorials">
+                        <group>
+                            <field name="dest_location_type"/>
+                            <field name="dest_delivery_appointment"/>
+                            <field name="dest_inside_delivery"/>
+                        </group>
+                        <group>
+                            <field name="dest_liftgate_delivery"/>
+                            <field name="dest_notify_delivery"/>
+                            <field name="dest_sort_segregate_delivery"/>
+                        </group>
+                    </group>
+
+                    <!-- Rate Selection -->
+                    <group string="Selected Rate" invisible="not mycarrier_quote_id">
+                        <group>
+                            <field name="mycarrier_quote_id" readonly="1"/>
+                            <field name="mycarrier_selected_carrier" readonly="1"/>
+                            <field name="mycarrier_selected_level" readonly="1"/>
+                            <field name="mycarrier_carrier_quote_number" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="mycarrier_total_cost" readonly="1"/>
+                            <field name="mycarrier_rated_at" readonly="1"/>
+                        </group>
+                    </group>
+
+                    <!-- Shipment Details -->
+                    <group string="Dispatched Shipment" invisible="not mycarrier_shipment_id">
+                        <group>
+                            <field name="mycarrier_shipment_id" readonly="1"/>
+                            <field name="mycarrier_pro_number" readonly="1"/>
+                            <field name="mycarrier_pickup_number" readonly="1"/>
+                            <field name="mycarrier_carrier_name" readonly="1"/>
+                            <field name="mycarrier_pickup_date" readonly="1"/>
+                            <field name="mycarrier_estimated_delivery" readonly="1"/>
+                            <field name="mycarrier_final_cost" readonly="1"/>
+                            <field name="mycarrier_tracking_status" readonly="1"/>
+                            <field name="mycarrier_actual_pickup_date" readonly="1"/>
+                            <field name="mycarrier_status_exception" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="mycarrier_bol_url" readonly="1" widget="url"/>
+                        </group>
+                    </group>
+
+                    <div invisible="mycarrier_quote_id">
+                        <p class="text-muted">
+                            Fill in accessorials above, then click
+                            <b>Get MyCarrier Rates</b> to fetch rates and select a carrier.
+                        </p>
+                    </div>
+
+                </page>
+            </xpath>
+
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="pos_payment_method_form_view_inherit" model="ir.ui.view">
+        <field name="name">pos.payment.method.view.form.inherit</field>
+        <field name="model">pos.payment.method</field>
+        <field name="inherit_id" ref="point_of_sale.pos_payment_method_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="inside">
+                <notebook colspan="4">
+                 <page invisible="not moneris_device_id" string="Moneris Payment Journal Config" name="journal_config">
+                    <field name="moneris_payment_journal_config_ids" colspan="4" nolabel="1">
+                        <list string="Payments" editable="bottom">
+                            <field name="card_name" />
+                            <field name="journal_id" />
+                            <field name="receivable_account_id" />
+                            <field name="is_other_payment" />
+                        </list>
+                    </field>
+                </page>
+                </notebook>
+            </xpath>
+
+            <xpath expr="//field[@name='use_payment_terminal']" position="after">
+<!--                <br/>-->
+                <group>
+                    <field name="is_directly_payment"
+                       invisible="use_payment_terminal != 'moneris'"/>
+                    <field name="moneris_device_id" />
+                    <field name="account_id"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>
